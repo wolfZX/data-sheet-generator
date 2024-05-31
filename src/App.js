@@ -22,7 +22,6 @@ import {
   FormLabel,
   FormErrorMessage,
   useColorMode,
-  Switch,
   Grid,
   Divider,
   LightMode,
@@ -34,6 +33,8 @@ import {
   QuestionIcon,
   DownloadIcon,
   WarningTwoIcon,
+  MoonIcon,
+  SunIcon,
 } from "@chakra-ui/icons"
 import { uniqueNamesGenerator, names } from "unique-names-generator";
 import randomCountry from "random-country";
@@ -646,20 +647,14 @@ function App() {
   return (
     <Flex className='App' width='full' justify='center'>
       <Container maxW='750px'>
-        <FormControl display='flex' alignItems='center' justifyContent='end'>
-          <FormLabel m='0'>
-            Dark mode:
-          </FormLabel>
-          <LightMode>
-            <Switch
-              ml='2'
-              id='color_mode'
-              colorScheme='teal'
-              isChecked={colorMode === 'dark'}
-              onChange={toggleColorMode}
-            />
-          </LightMode>
-        </FormControl>
+        <Flex alignItems='center' justifyContent='end'>
+          <IconButton
+            aria-label="Light Dark Mode"
+            isRound={true}
+            icon={colorMode === 'dark' ? <SunIcon /> : <MoonIcon />}
+            onClick={toggleColorMode}
+          />
+        </Flex>
         <Flex flexDirection='column' alignItems='center' my='5' textAlign='center'>
           <Heading mb='2'>Data sheet generator</Heading>
           <Text>
