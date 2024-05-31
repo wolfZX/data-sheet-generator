@@ -1,6 +1,5 @@
 // @ts-check
 const { test, expect } = require('@playwright/test');
-const fs = require('fs');
 const { DataSheetGeneratorPage } = require('./pageobjects/data-sheet-generator-page');
 
 test.beforeEach(async ({ page }) => {
