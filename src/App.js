@@ -43,7 +43,6 @@ import "./App.css";
 // TODO:
 // - [FEATURES] Allow rearrange by drag and drop
 // - [ENHANCES] Refract components and err message constants
-// - [ENHANCES] Add end-to-end unit testing
 function App() {
   const defaultColumn = { id: uuidv4(), header: 'Name', category: 'preset', preset_value: 'name', custom_values: [] };
   const [columns, setColumns] = useState([defaultColumn]);
@@ -479,7 +478,8 @@ function App() {
     }
     const errorMessage = getErrorMessage('columns', 'custom_values', column.id, customValue.id);
     return (
-      <FormControl 
+      <FormControl
+        id={customValue.id}
         key={customValue.id}
         isInvalid={!!errorMessage}
       >
@@ -577,7 +577,7 @@ function App() {
                     <QuestionIcon ml='1' />
                   </Tooltip>
                 </Radio>
-                <Box pl='5'>
+                <Box id="custom-column-values" pl='5'>
                   <Stack>
                     { column?.custom_values?.map((cv) => renderCustomValueInput(column, cv)) }
                   </Stack>
@@ -610,7 +610,7 @@ function App() {
     }
 
     return (
-      <Box key={column.id} border='1px' borderRadius='md' p='5' mb='5'>
+      <Box id={column.id} key={column.id} border='1px' borderRadius='md' p='5' mb='5'>
         <Flex mb='5' justifyContent='space-between' alignItems='center'>
           <Heading as='h3' size='md'>Column {idx + 1}</Heading>
           <IconButton
@@ -673,7 +673,7 @@ function App() {
           </Heading>
           { renderWarningIcon(!isObjectEmpty(errors.columns)) }
         </Flex>
-        <Box>
+        <Box id="columns">
           { columns.map((column, idx) => renderColumn(column, idx)) }
           <Flex justify='flex-end'>
             <LightMode>
@@ -695,7 +695,7 @@ function App() {
             </Heading>
             { renderWarningIcon(!isObjectEmpty(errors.settings)) }
           </Flex>
-          <Grid gap='2' templateColumns={['repeat(1, 1fr)', null, 'repeat(2, 1fr)']}>
+          <Grid id="settings" gap='2' templateColumns={['repeat(1, 1fr)', null, 'repeat(2, 1fr)']}>
             <FormControl width='full' isRequired isInvalid={fileNameErrorMessage}>
               <FormLabel mb='2'>
                 File name
