@@ -9,6 +9,10 @@ You may check out the demo [over here](https://data-sheet-generator.vercel.app/)
 - This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 - The component library used is [Chakra UI](https://v2.chakra-ui.com/).
 
+If you would like to clone and modify this project, do make sure you have these extensions enabled in your code editor:
+- [Linting utility: ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+- [Web testing: Playwright](https://marketplace.visualstudio.com/items?itemName=ms-playwright.playwright)
+
 ### `npm start`
 
 Runs the app in the development mode.\
