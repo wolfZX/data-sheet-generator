@@ -3,7 +3,6 @@
 export class DataSheetGeneratorPage {
   constructor(page) {
     this.page = page;
-    this.modeCheckbox = page.getByLabel('Dark mode');
     this.newColumnButton = page.getByRole('button', { name: 'New column' });
     this.downloadSpreadsheetButton = page.getByRole('button', { name: 'Download Spreadsheet' });
   }
@@ -59,7 +58,7 @@ export class DataSheetGeneratorPage {
     const presetColumnRadio = await columnLocator.getByLabel('Preset column value');
     const presetColumnSelect = await columnLocator.locator("[name='preset_value']");
     const presetColumnOptions = await presetColumnSelect.locator('option');
-    const customColumnRadio = await columnLocator.getByLabel('Custom column value');
+    const customColumnRadio = await columnLocator.locator('label:has-text("Custom column value")'); // Use CSS selector for workaround on parent intercepts pointer event issue
     const customColumnValuesLocator = await columnLocator.locator("#custom-column-values");
     const newCustomColumnValueInputs = await customColumnValuesLocator.locator(":scope > div > div");
     const newCustomColumnValueButton = await columnLocator.getByRole('button', { name: 'New value' });

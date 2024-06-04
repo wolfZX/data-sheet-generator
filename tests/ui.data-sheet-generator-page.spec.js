@@ -176,7 +176,8 @@ test.describe('Columns test', () => {
       newCustomColumnValueButton,
       newCustomColumnValueInputs,
     } = columnFields;
-    await customColumnRadio.click({ force: true }); // Force click due to Chakra radio span intercept the pointer
+    await customColumnRadio.click();
+
     await expect(customColumnRadio).toBeChecked();
     await expect(presetColumnRadio).not.toBeChecked();
     await expect(presetColumnSelect).toBeDisabled();
@@ -200,7 +201,7 @@ test.describe('Columns test', () => {
       customColumnRadio,
       newCustomColumnValueInputs,
     } = columnFields;
-    await customColumnRadio.click({ force: true });
+    await customColumnRadio.click();
     await dataSheetGeneratorPage.addNewCustomColumnValue(columnId);
 
     const customColumnValueInput = await dataSheetGeneratorPage.getCustomColumnValueInput({ columnId, nthChild: 1 });
