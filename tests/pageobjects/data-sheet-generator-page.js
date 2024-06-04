@@ -129,47 +129,27 @@ export class DataSheetGeneratorPage {
   }
 
   async addNewColumn() {
-    const isEnabled = await this.newColumnButton.isEnabled();
-    if (!isEnabled) {
-      throw new Error("Button is not enabled.");
-    }
     await this.newColumnButton.click();
   }
 
   async deleteColumn(id) {
     const { deleteColumnButton } = await this.getColumnFields(id);
-    const isEnabled = await deleteColumnButton.isEnabled();
-    if (!isEnabled) {
-      throw new Error("Button is not enabled.");
-    }
     await deleteColumnButton.click();
   }
 
   async addNewCustomColumnValue(columnId) {
     const { newCustomColumnValueButton } = await this.getColumnFields(columnId);
-    const isEnabled = await newCustomColumnValueButton.isEnabled();
-    if (!isEnabled) {
-      throw new Error("Button is not enabled.");
-    }
     await newCustomColumnValueButton.click();
   }
 
   async deleteCustomColumnValue(props) {
     const { columnId, id } = props;
     const { deleteCustomColumnValueButton } = await this.getCustomColumnValueInput({ columnId, id })
-    const isEnabled = await deleteCustomColumnValueButton.isEnabled();
-    if (!isEnabled) {
-      throw new Error("Button is not enabled.");
-    }
     await deleteCustomColumnValueButton.click();
   }
 
   async downloadSpreadsheet() {
     const downloadPromise = this.page.waitForEvent('download');
-    const isEnabled = await this.downloadSpreadsheetButton.isEnabled();
-    if (!isEnabled) {
-      throw new Error("Button is not enabled.");
-    }
     await this.downloadSpreadsheetButton.click();
     const download = await downloadPromise;
 
