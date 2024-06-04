@@ -201,9 +201,9 @@ test.describe('Columns test', () => {
       newCustomColumnValueInputs,
     } = columnFields;
     await customColumnRadio.click({ force: true });
+    await dataSheetGeneratorPage.addNewCustomColumnValue(columnId);
 
     const customColumnValueInput = await dataSheetGeneratorPage.getCustomColumnValueInput({ columnId, nthChild: 1 });
-    await dataSheetGeneratorPage.addNewCustomColumnValue(columnId);
   
     const newCustomColumnValueInputCount = await newCustomColumnValueInputs.count();
     await expect(newCustomColumnValueInputCount).toEqual(2);
