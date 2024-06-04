@@ -5,10 +5,15 @@ const { DataSheetGeneratorPage } = require('./pageobjects/data-sheet-generator-p
 
 // NOTE: Not locators or selectors in spec file
 
-test.beforeEach(async ({ page }) => {
+test.beforeEach(async ({ page, browserName  }, testInfo) => {
+  if (browserName === 'webkit') {
+    // Extend timeout for all tests running this hook by 30 seconds in webkit.
+    testInfo.setTimeout(testInfo.timeout + 30000);
+  }
+
   const dataSheetGeneratorPage = new DataSheetGeneratorPage(page);
   await dataSheetGeneratorPage.goto();
-  await expect(page.url()).toBe('http://localhost:3000/');
+  await expect(dataSheetGeneratorPage.page.url()).toBe('http://localhost:3000/');
 });
 
 test.describe('Initial load', () => {

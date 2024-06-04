@@ -43,11 +43,10 @@ module.exports = defineConfig({
       use: { ...devices['Desktop Firefox'] },
     },
 
-    // TODO: Disabled for now as it as timeout issue
-    // {
-    //   name: 'webkit',
-    //   use: { ...devices['Desktop Safari'] },
-    // },
+    {
+      name: 'webkit',
+      use: { ...devices['Desktop Safari'] },
+    },
 
     /* Test against mobile viewports. */
     // {
