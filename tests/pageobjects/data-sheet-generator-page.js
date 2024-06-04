@@ -1,3 +1,5 @@
+// NOTE: Not assertion in this file
+
 export class DataSheetGeneratorPage {
   constructor(page) {
     this.page = page;
@@ -16,16 +18,23 @@ export class DataSheetGeneratorPage {
     return columns;
   }
 
-  async getColumn(nthChild) {
+  async getColumn(props) {
+    const { nthChild, id } = props;
     const columnsLocator = await this.page.locator("#columns");
-    const column = await columnsLocator.locator(`:scope > div:nth-child(${nthChild})[id]`);
+    let columnLocator = null;
 
-    const isVisible = await column.isVisible();
+    if (nthChild) {
+      columnLocator = await columnsLocator.locator(`:scope > div:nth-child(${nthChild})[id]`);
+    } else if (id) {
+      columnLocator = await columnsLocator.locator(`:scope > div[id="${id}"]`);
+    }
+
+    const isVisible = await columnLocator.isVisible();
     if (!isVisible) {
       throw new Error(`Column not found`);
     }
 
-    return column;
+    return columnLocator;
   }
 
   async getColumnHeader(id) {
@@ -52,8 +61,9 @@ export class DataSheetGeneratorPage {
     const presetColumnOptions = await presetColumnSelect.locator('option');
     const customColumnRadio = await columnLocator.getByLabel('Custom column value');
     const customColumnValuesLocator = await columnLocator.locator("#custom-column-values");
+    const newCustomColumnValueInputs = await customColumnValuesLocator.locator(":scope > div > div");
     const newCustomColumnValueButton = await columnLocator.getByRole('button', { name: 'New value' });
-  
+
     return {
       deleteColumnButton,
       headerNameInput,
@@ -63,7 +73,36 @@ export class DataSheetGeneratorPage {
       customColumnRadio,
       customColumnValuesLocator,
       newCustomColumnValueButton,
+      newCustomColumnValueInputs,
     }
+  }
+
+  async getCustomColumnValueInput(props) {
+    const { columnId, nthChild, id } = props;
+    const { customColumnValuesLocator } = await this.getColumnFields(columnId);
+    let customColumnValueInputLocator = null;
+
+    if (nthChild) {
+      customColumnValueInputLocator = await customColumnValuesLocator.locator(`:scope > div > div:nth-child(${nthChild}) > div[id]`);
+    } else if (id) {
+      customColumnValueInputLocator = await customColumnValuesLocator.locator(`:scope > div > div > div[id="${id}"]`);
+    }
+
+    const isVisible = await customColumnValueInputLocator.isVisible();
+    if (!isVisible) {
+      throw new Error(`Custom column value input is not found in Column with id "${columnId}"`);
+    }
+  
+    const deleteCustomColumnValueButton = await customColumnValueInputLocator.locator('button[aria-label="Delete custom value"]');
+    const isDeleteButtonVisible = await deleteCustomColumnValueButton.isVisible();
+    if (!isDeleteButtonVisible) {
+      throw new Error("Delete button is not found");
+    }
+
+    return {
+      customColumnValueInputLocator,
+      deleteCustomColumnValueButton,
+    };
   }
 
   async getSettingFields() {
@@ -96,5 +135,24 @@ export class DataSheetGeneratorPage {
   async deleteColumn(id) {
     const { deleteColumnButton } = await this.getColumnFields(id);
     await deleteColumnButton.click();
+  }
+
+  async addNewCustomColumnValue(columnId) {
+    const { newCustomColumnValueButton } = await this.getColumnFields(columnId);
+    await newCustomColumnValueButton.click();
+  }
+
+  async deleteCustomColumnValue(props) {
+    const { columnId, id } = props;
+    const { deleteCustomColumnValueButton } = await this.getCustomColumnValueInput({ columnId, id })
+    await deleteCustomColumnValueButton.click();
+  }
+
+  async downloadSpreadsheet() {
+    const downloadPromise = this.page.waitForEvent('download');
+    await this.downloadSpreadsheetButton.click();
+    const download = await downloadPromise;
+
+    return download;
   }
 }

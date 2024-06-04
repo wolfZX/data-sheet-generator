@@ -480,11 +480,10 @@ function App() {
     const errorMessage = getErrorMessage('columns', 'custom_values', column.id, customValue.id);
     return (
       <FormControl
-        id={customValue.id}
         key={customValue.id}
         isInvalid={!!errorMessage}
       >
-        <Flex align='center'>
+        <Flex align='center' id={customValue.id}>
           <Input
             name='custom_values'
             value={customValue.value}
