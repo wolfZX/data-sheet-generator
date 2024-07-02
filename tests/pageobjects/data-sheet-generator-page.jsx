@@ -8,7 +8,7 @@ export class DataSheetGeneratorPage {
   }
 
   async goto() {
-    await this.page.goto('http://localhost:3000/');
+    await this.page.goto('http://localhost:5173/');
   }
 
   async getColumns() {

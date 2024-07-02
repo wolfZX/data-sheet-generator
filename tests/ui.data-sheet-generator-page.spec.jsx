@@ -1,7 +1,7 @@
 // @ts-check
-const { test, expect } = require('@playwright/test');
-const fs = require('fs');
-const { DataSheetGeneratorPage } = require('./pageobjects/data-sheet-generator-page');
+import { test, expect } from '@playwright/test';
+import fs from 'fs';
+import { DataSheetGeneratorPage } from './pageobjects/data-sheet-generator-page';
 
 // NOTE: Not locators or selectors in spec file
 
@@ -13,7 +13,7 @@ test.beforeEach(async ({ page, browserName  }, testInfo) => {
 
   const dataSheetGeneratorPage = new DataSheetGeneratorPage(page);
   await dataSheetGeneratorPage.goto();
-  await expect(dataSheetGeneratorPage.page.url()).toBe('http://localhost:3000/');
+  await expect(dataSheetGeneratorPage.page.url()).toBe('http://localhost:5173/');
 });
 
 test.describe('Initial load', () => {
